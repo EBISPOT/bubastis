@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Bubastis Ontology Tool</title>
+
+<script type="text/javascript" src="scripts/bubastisjs.js"></script>
+<script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
+
+
+<style type="text/css">
+h1 {text-align:left;}
+p.main {text-align:left}
+
+#results, tr{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+font-size:0.9em;
+padding:3px 7px 2px 7px;
+background-color:#FFFFFF;
+height:100%;
+border-collapse:collapse;
+color:#404040;
+}
+#results tr.header{
+background-color:#E0FFFF;
+}
+#results tr.new{
+background-color:#CCFFBB;
+}
+#results tr.deleted{
+background-color:#E9967A;
+}
+h1{
+font-family:Arial, Helvetica, sans-serif;
+font-size:1.6em;
+color:#404040;
+}
+h2{
+font-family:Arial, Helvetica, sans-serif;
+font-size:1.2em;
+color:#404040;
+}
+p{
+font-size:0.9em;
+color:#404040;
+}
+
+</style>
+
+</head>
+
+<!-- trigger uri mode as default -->
+<body onload="selectionMade('ontology1URL')">
+
+
+<table border=0>
+<tr><td>
+<a href="http://www.ebi.ac.uk/efo"><img alt="EFO logo" src="./images/EFO_logo_filled_small.gif" border="0"></a>
+</td>
+<td>
+<h1>Bubastis - An Ontology Diff Tool (Beta Version 0.11)</h1>
+</td></tr>
+</table>
+
+<!--  <form id="bubastis_form" name="wobble" method=post action="BubastisServlet" enctype="application/x-www-form-urlencoded">-->
+<div id="bubastis.ontologyinput">    
+    
+    <div id="bubastis.ontologyinput.select1" style="display: inline; width: 250px; text-align:left;">
+        <label for="bubastis.ontologyinput.selector1">Ontology 1 location:</label>
+        <select id="bubastis.ontologyinput.selector1" onchange="selectionMade(this.value);">
+            <option value="ontology1URL">URL</option>
+            <option value="ontology1file">File</option>
+        </select>
+    </div>
+    
+        <div id="bubastis.ontologyinput.select2" style="display: inline; width: 250px; text-align:center;">
+        <label for="bubastis.ontologyinput.selector2">Ontology 2 location:</label>
+        <select id="bubastis.ontologyinput.selector2" onchange="selectionMade(this.value);">
+            <option value="ontology2URL">URL</option>
+            <option value="ontology2file">File</option>
+        </select>
+    </div>
+
+
+    <div id="bubastis.ontologyinput.input.URLandURL" style="display:inline; width: 400px; text-align:left;">
+        
+        <form id="bubastis_form1" name="wobble" method=post action="BubastisServlet" enctype="application/x-www-form-urlencoded">
+        
+        <label>
+        Ontology 1:
+            <input id="ontology1URL"
+                   name="ontology1"
+                   type="text"
+                   size="35"
+                   style="color: #d3d3d3;">
+        Ontology 2:
+        	<input id="ontology2URL"
+                   name="ontology2"
+                   type="text"
+                   size="35"
+                   style="color: #d3d3d3;">    
+        </label>  
+        <br></br>
+        Changes to check for:<br />
+		<input type="checkbox" name="modifiedClasses" checked>Modified classes<br />
+		<input type="checkbox" name="newClasses" checked>Newly added classes<br />
+		<input type="checkbox" name="deletedClasses" checked>Deleted classes<br></br>
+
+		<input type="submit" value=" Begin Ontology Diff ">       
+        </form>  
+    </div>
+
+    <div id="bubastis.ontologyinput.input.FileandURL" style="display:inline; width: 400px; text-align:left;">
+        
+        <form id="bubastis_form2" name="wobble" method=post action="BubastisServlet" enctype="multipart/form-data">
+        
+		<label>
+        Ontology 1:
+            <input id="ontology1file"
+            	value="file location.."
+                   name="ontology1"
+                   type="file"
+                   size="35"
+                   style="color: #d3d3d3;">
+        Ontology 2:
+        	<input id="ontology2URL"
+                   name="ontology2url"
+                   type="text"
+                   size="35"
+                   style="color: #d3d3d3;">    
+        </label>    
+        <br></br>
+        Changes to check for:<br />
+		<input type="checkbox" name="modifiedClasses" checked>Modified classes<br />
+		<input type="checkbox" name="newClasses" checked>Newly added classes<br />
+		<input type="checkbox" name="deletedClasses" checked>Deleted classes<br></br>
+
+		<input type="submit" value=" Begin Ontology Diff ">
+        </form>
+    </div>
+
+    <div id="bubastis.ontologyinput.input.URLandFile" style="display:inline; width: 400px; text-align:left;">
+        
+        <form id="bubastis_form3" name="wobble" method=post action="BubastisServlet" enctype="multipart/form-data">
+              
+        <label>
+        Ontology 1:
+            <input id="ontology1URL"
+                   name="ontology1url"
+                   type="text"
+                   size="35"
+                   style="color: #d3d3d3;">
+        Ontology 2:
+        	<input id="ontology2file"
+                   value="file location.."
+                   name="ontology2"
+                   type="file"
+                   size="35"
+                   style="color: #d3d3d3;">    
+        </label>   
+        <br></br>
+        Changes to check for:<br />
+		<input type="checkbox" name="modifiedClasses" checked>Modified classes<br />
+		<input type="checkbox" name="newClasses" checked>Newly added classes<br />
+		<input type="checkbox" name="deletedClasses" checked>Deleted classes<br></br>
+
+		<input type="submit" value=" Begin Ontology Diff ">
+        </form>   
+    </div>
+
+    <div id="bubastis.ontologyinput.input.FileandFile" style="display:inline; width: 400px; text-align:left;">
+        
+        <form id="bubastis_form4" name="wobble" method=post action="BubastisServlet" enctype="multipart/form-data">
+        
+        <label>
+        Ontology 1:
+            <input id="ontology1file"
+            	value="file location.."
+                   name="ontology1"
+                   type="file"
+                   size="35"
+                   style="color: #d3d3d3;">
+        Ontology 2:
+        	<input id="ontology2file"
+                   value="file location.."
+                   name="ontology2"
+                   type="file"
+                   size="35"
+                   style="color: #d3d3d3;">    
+        </label>  
+        <br></br>  
+        <br></br>
+		Changes to check for:<br />
+		<input type="checkbox" name="modifiedClasses" checked>Modified classes<br />
+		<input type="checkbox" name="newClasses" checked>Newly added classes<br />
+		<input type="checkbox" name="deletedClasses" checked>Deleted classes<br></br>
+
+		<input type="submit" value=" Begin Ontology Diff ">
+        </form>
+    </div>
+
+<br></br>
+<br></br>
+
+</div>
+
+<div id="bubastis.ontologyinput.input.ontology1file" style="display:inline; width: 400px; text-align:left;">
+          	<label>
+                <input id="ontology1file"
+                       value="file.."
+                	   name="ontology1file"
+                       type="file"
+                       size="25"
+                       style="color: #d3d3d3;"
+                       onclick="removeHint(this);">
+            </label>
+    </div>   
+    <br></br>    
+    <div id="bubastis.ontologyinput.input.ontology2URL" style="display:inline; width: 400px; text-align:left;">
+        <label>
+            <input id="ontology2URL"
+                   name="ontology2url"
+                   type="text"
+                   size="35"
+                   style="color: #d3d3d3;"
+                   onclick="removeHint(this);">
+        </label>
+    </div>    
+        <div id="bubastis.ontologyinput.input.ontology2file" style="display:inline; width: 400px; text-align:left;">
+          	<label>
+                <input id="ontology2file"
+                       value="file.."
+                	   name="ontology2file"
+                       type="file"
+                       size="25"
+                       style="color: #d3d3d3;"
+                       onclick="removeHint(this);">
+            </label>
+    </div>
+
+
+
+
+</body>
+</html>
