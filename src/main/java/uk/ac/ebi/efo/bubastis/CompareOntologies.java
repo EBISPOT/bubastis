@@ -59,11 +59,6 @@ public class CompareOntologies {
         OWLOntology ontology2;
 
 
-        // Very important otherwise RDFXMLParser
-        // fails with SAXParseException: The parser has encountered more
-        // than "64,000" entity expansions
-        System.setProperty("entityExpansionLimit", "10000000000");
-
         //load ontology1 from URL using the OntologyLoader class
         //can also load file in form for example: "file:/H://experimentalfactors.owl"
         //attempt to create IRIs
@@ -122,13 +117,6 @@ public class CompareOntologies {
 
         System.out.println("trying load now");
 
-        // Very important otherwise RDFXMLParser
-        // fails with SAXParseException: The parser has encountered more
-        // than "64,000" entity expansions
-
-        System.setProperty("entityExpansionLimit", "1000000000");
-
-
         //load ontology 1 from file
         try {
             ontology1 = manager1.loadOntologyFromOntologyDocument(ontologyFile1);
@@ -181,11 +169,6 @@ public class CompareOntologies {
         System.out.println("trying load now");
 
 
-        // Very important otherwise RDFXMLParser
-        // fails with SAXParseException: The parser has encountered more
-        // than "64,000" entity expansions
-        System.setProperty("entityExpansionLimit", "1000000000");
-
         //load ontology1 from URL using the OntologyLoader class
         //can also load file in form for example: "file:/H://experimentalfactors.owl"
         //attempt to create IRI
@@ -230,11 +213,6 @@ public class CompareOntologies {
 
         System.out.println("trying load now");
 
-
-        // Very important otherwise RDFXMLParser
-        // fails with SAXParseException: The parser has encountered more
-        // than "64,000" entity expansions
-        System.setProperty("entityExpansionLimit", "1000000000");
 
         //load ontology 1 from file
         OWLOntology ontology1 = manager1.loadOntologyFromOntologyDocument(ontologyFile1);

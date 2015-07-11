@@ -39,6 +39,14 @@ class Driver {
         options.addOption(outputFormat);
         options.addOption(xsltPath);
 
+        // if entityExpansionLimit hasn't already been set, set it
+        // This is very important otherwise RDFXMLParser
+        // fails with SAXParseException: The parser has encountered more
+        // than "64,000" entity expansions
+        if (System.getProperty("entityExpansionLimit") == null) {
+            System.setProperty("entityExpansionLimit", "10000000");
+        }
+
         //parse arguments and do appropriate diff
         try {
 
