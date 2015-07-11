@@ -74,9 +74,9 @@
         </dependency>
 
         <dependency>
-            <groupId>coslib</groupId>
-            <artifactId>coslib</artifactId>
-            <version>1.0</version>
+            <groupId>servlets.com</groupId>
+            <artifactId>cos</artifactId>
+            <version>05Nov2002</version>
         </dependency>
 
 
