@@ -30,7 +30,7 @@ Loading two files locally and outputting results to console:
 java -jar bubastis.jar -ontology1 "H://obi_nov_08.owl" -ontology2 "H://obi_jan_09.owl"
 
 Loading two files locally and output results to xml file with an xslt location inserted into header
-java -jar bubastis.jar -1 "H://obi_nov_08.owl" -2 "H://obi_jan_09.owl" -output "H://OBIdiff.xml" -format xml -xslt "./stylesheets/bubastis.xslt"
+java -jar bubastis.jar -ontology1 "H://obi_nov_08.owl" -ontology2 "H://obi_jan_09.owl" -output "H://OBIdiff.xml" -format xml -xslt "./stylesheets/bubastis.xslt"
 
 Loading one file locally and one from the web and outputting results to plain text:
 java -jar bubastis.jar -ontology1 "H://disease_ontology_version_1.owl" -ontology2 "http://www.disease.org/diseaseontology_latest.owl" -output "C://my_diff.txt" 
