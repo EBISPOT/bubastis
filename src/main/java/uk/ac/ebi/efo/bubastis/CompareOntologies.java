@@ -7,6 +7,7 @@ import java.util.*;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.search.EntitySearcher;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 
 import uk.ac.ebi.efo.bubastis.exceptions.Ontology1LoadException;
@@ -313,7 +314,7 @@ public class CompareOntologies {
                 OWLDataFactory df = manager1.getOWLDataFactory();
                 OWLAnnotationProperty label = df.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
-                Set<OWLAnnotation> classLabels = ont1Class.getAnnotations(ont1, label);
+                Set<OWLAnnotation> classLabels = new HashSet<>(EntitySearcher.getAnnotations(ont1Class,ont1,label));
                 //add rdfs labels info to the class information
                 tempDiffs.setClassLabels(classLabels);
 
@@ -372,7 +373,7 @@ public class CompareOntologies {
                 OWLDataFactory df = manager1.getOWLDataFactory();
                 OWLAnnotationProperty label = df.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
-                Set<OWLAnnotation> classLabels = ont2Class.getAnnotations(ont2, label);
+                Set<OWLAnnotation> classLabels = new HashSet<>(EntitySearcher.getAnnotations(ont2Class,ont2,label));
 
                 //add rdfs labels info to the class information
                 tempNewClass.setClassLabels(classLabels);

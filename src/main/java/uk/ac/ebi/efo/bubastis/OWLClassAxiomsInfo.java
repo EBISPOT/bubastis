@@ -4,12 +4,18 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
+import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
+import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxObjectRenderer;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.search.EntitySearcher;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-import uk.ac.manchester.cs.owl.owlapi.mansyntaxrenderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
+
 
 
 /*
@@ -293,9 +299,10 @@ public class OWLClassAxiomsInfo implements Serializable{
                 SimpleLabelProvider labelProvider = new SimpleLabelProvider(ontology);
 
                 //render it as manchester syntax
-                ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
-                rendering.setShortFormProvider(labelProvider);
-                String axiomWithLabels = rendering.render(axiom);
+				OWLObjectRenderer renManchester = new ManchesterOWLSyntaxOWLObjectRendererImpl();
+				renManchester.setShortFormProvider(labelProvider);
+
+                String axiomWithLabels = renManchester.render(axiom);
 
                 //store as a string for doing some regex later
 	    		//String axiomWithLabels = axiom.toString();
@@ -313,7 +320,7 @@ public class OWLClassAxiomsInfo implements Serializable{
 		    		OWLDataFactory df = manager.getOWLDataFactory(); 
 					OWLAnnotationProperty label = df.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI()); 
 					
-		    		Set<OWLAnnotation> entityLabels = e.getAnnotations(ontology, label);
+		    		Set<OWLAnnotation> entityLabels = new HashSet<>(EntitySearcher.getAnnotations(e,ontology,label));
 		    		
 		    		//loop through the labels (there could be more than 1)
 		    		if (entityLabels != null){
@@ -366,7 +373,7 @@ public class OWLClassAxiomsInfo implements Serializable{
             OWLDataFactory df = manager.getOWLDataFactory();
             OWLAnnotationProperty label = df.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI());
 
-            Set<OWLAnnotation> entityLabels = entity.getAnnotations(this.ontology, label);
+            Set<OWLAnnotation> entityLabels = new HashSet<>(EntitySearcher.getAnnotations(entity,ontology,label));
 
             //loop through the labels (there could be more than 1)
             if (entityLabels != null){
