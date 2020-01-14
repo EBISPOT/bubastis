@@ -8,9 +8,11 @@ package uk.ac.ebi.efo.bubastis;
 
 
 
+import org.semanticweb.owlapi.search.EntitySearcher;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.semanticweb.owlapi.model.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -49,7 +51,7 @@ public class OntologyLoader {
 			OWLAnnotationProperty label = df.getOWLAnnotationProperty(OWLRDFVocabulary.RDFS_LABEL.getIRI()); 
 			
 			//now get all annotations that are rdfs:labels on the class
-			for(OWLAnnotation annotation : cls.getAnnotations(ontology, label)) {				
+			for(OWLAnnotation annotation : new HashSet<>(EntitySearcher.getAnnotations(cls,ontology,label))) {
 				OWLLiteral val = (OWLLiteral) annotation.getValue();
 				System.out.println(val.getLiteral());
 			}
@@ -81,7 +83,7 @@ public class OntologyLoader {
 		
 
 			//try to get property for the class
-			Set<OWLAnnotation> annot = cls.getAnnotations(ontology, property);
+			Set<OWLAnnotation> annot = new HashSet<>(EntitySearcher.getAnnotations(cls,ontology,property));;
 			//if the class does not have this property display warning
 			if(annot.size() == 0){		
 				System.out.println("Warning: class '" + cls + "' has no property type " + propertyType);
