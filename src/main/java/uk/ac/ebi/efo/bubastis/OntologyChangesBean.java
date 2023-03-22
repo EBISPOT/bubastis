@@ -224,7 +224,7 @@ public class OntologyChangesBean {
    * @return formattedXml formatted for xml
    */
   private String checkForReservedXMLCharacter(String unformattedXml) {
-    String formattedXml = StringEscapeUtils.escapeXml(unformattedXml);
+    String formattedXml = StringEscapeUtils.escapeXml11(unformattedXml);
 
     return formattedXml;
   }
