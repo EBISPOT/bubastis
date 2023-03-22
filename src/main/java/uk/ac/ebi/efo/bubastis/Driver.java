@@ -3,8 +3,10 @@ package uk.ac.ebi.efo.bubastis;
 
 import org.apache.commons.cli.*;
 import org.apache.commons.validator.routines.UrlValidator;
+import org.nfdi4biodiversity.biodivportal.configuration.Configuration;
 
 import java.io.File;
+import org.semanticweb.owlapi.model.IRI;
 
 
 /**
@@ -16,15 +18,26 @@ import java.io.File;
  */
 class Driver {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
+        // read configuration
+        Configuration configuration = new Configuration();
+        IRI labelIRI = configuration.getLabelProperty();
+        IRI synIRI = configuration.getSynonymProperty();
+    
+        args = new String[] {"-ontology1", configuration.getOntologyFile1(), "-ontology2",
+            configuration.getOntologyFile2(), "-output",
+            configuration.getResultsPath() + "output_diff" + "_" + configuration.getOntologyRelease1()
+                + "_" + configuration.getOntologyRelease2() + ".txt",
+            "-format", "xml"};
+    
         Object ontologyObject1 = new Object();
         Object ontologyObject2 = new Object();
-
-        //create options
+    
+        // create options
         Options options = new Options();
-
-        //locations of the two ontologies are required
+    
+        // locations of the two ontologies are required
         Option ontology1 = new Option("ontology1", true, "ontology 1 location");
         ontology1.setRequired(true);
         Option ontology2 = new Option("ontology2", true, "ontology 2 location");
@@ -32,21 +45,21 @@ class Driver {
         Option outputFile = new Option("output", true, "output file location");
         Option outputFormat = new Option("format", true, "output format");
         Option xsltPath = new Option("xslt", true, "location of xslt for xml output");
-
+    
         options.addOption(ontology1);
         options.addOption(ontology2);
         options.addOption(outputFile);
         options.addOption(outputFormat);
         options.addOption(xsltPath);
-
+    
         // if entityExpansionLimit hasn't already been set, set it
         // This is very important otherwise RDFXMLParser
         // fails with SAXParseException: The parser has encountered more
         // than "64,000" entity expansions
         if (System.getProperty("entityExpansionLimit") == null) {
-            System.setProperty("entityExpansionLimit", "10000000");
+          System.setProperty("entityExpansionLimit", "10000000");
         }
-
+    
         //parse arguments and do appropriate diff
         try {
 
